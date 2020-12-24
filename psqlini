@@ -1,0 +1,9 @@
+#!/usr/bin/env perl
+use Config::Tiny;
+my $db = shift @ARGV;
+my $config = Config::Tiny->read(glob "~/.database.ini");
+my $p = $config->{$db}->{password};
+my $u = $config->{$db}->{user};
+my $h = $config->{$db}->{host};
+exec "PGPASSWORD='$p' psql -h '$h' '$db' '$u'";
+0;
