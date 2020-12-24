@@ -1,0 +1,7 @@
+#! /usr/local/bin/perl -ni.bak
+# 1) ensure one "use DbiIni;" following each "use DBI;"
+# 2) convert each DBI->connect to a DbiIni->connect
+next if (/^\s*use DbiIni;/);
+s/DBI->connect\W.*DBI:Pg:dbname=(\w+).*['"]['"]/DbiIni->connect('\1'/;
+print;
+print "$1use DbiIni;\n" if (/^(\s*)use DBI;/);
